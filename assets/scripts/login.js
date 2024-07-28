@@ -52,23 +52,23 @@ var Login = function() {
             },
 
             submitHandler: function(form) {
-                var IguanaLoginData = {
+                var KeymakerLoginData = {
                     'handle': $('#wallet-handle').val(),
                     'password': $('#password').val(),
                     'timeout': '2592000'
                 }
                 //console.log('== Data Collected ==');
-                //console.log(IguanaLoginData);
+                //console.log(KeymakerLoginData);
                 // Use AJAX to post the object to login user
                 $.ajax({
                     type: 'GET',
-                    data: IguanaLoginData,
+                    data: KeymakerLoginData,
                     url: 'http://127.0.0.1:7778/api/bitcoinrpc/walletpassphrase',
                     dataType: 'text',
                     success: function(data, textStatus, jqXHR) {
                         var LoginOutput = JSON.parse(data);
                         var LoginDataToStore = JSON.stringify(data);
-                        sessionStorage.setItem('IguanaActiveAccount', LoginDataToStore);
+                        sessionStorage.setItem('KeymakerActiveAccount', LoginDataToStore);
                         console.log(sessionStorage);
                         console.log('== Data OutPut ==');
                         console.log(LoginOutput);
@@ -95,12 +95,12 @@ var Login = function() {
                                     if ( value == 'BTC' ) {
                                         var logincoinmodeval = $("input[name='logincoinbtcmode']:checked").val();
                                         var logincoin_data = {"coin": value, "mode": logincoinmodeval};
-                                        Iguana_addcoinLogin(logincoin_data);
+                                        Keymaker_addcoinLogin(logincoin_data);
                                     }
                                     if ( value == 'BTCD' ) {
                                         var logincoinmodeval = $("input[name='logincoinbtcdmode']:checked").val();
                                         var logincoin_data = {"coin": value, "mode": logincoinmodeval};
-                                        Iguana_addcoinLogin(logincoin_data);
+                                        Keymaker_addcoinLogin(logincoin_data);
                                     }
                                 });
                             } else {
@@ -115,7 +115,7 @@ var Login = function() {
                         console.log('failure');
                         console.log(xhr.statusText);
                         if ( xhr.readyState == 0 ) {
-                            Iguana_ServiceUnavailable();
+                            Keymaker_ServiceUnavailable();
                         }
                         console.log(textStatus);
                         console.log(error);
@@ -126,10 +126,10 @@ var Login = function() {
                 
                 $('#section-dashboard').show();
                 $('#section-easydex').hide();
-                $('#section-about-iguana').hide();
+                $('#section-about-keymaker').hide();
                 $('#nav-dashboard').removeClass( "" ).addClass( "active open" );
                 $('#nav-easydex').removeClass( " active open" ).addClass( "" );
-                $('#nav-about-iguana').removeClass( " active open" ).addClass( "" );
+                $('#nav-about-keymaker').removeClass( " active open" ).addClass( "" );
                 //form.submit(); // form validation success, call ajax form submit
             }
         });
@@ -144,8 +144,8 @@ var Login = function() {
         });
 
         $('input[name=PassPhraseOptions]').on('change', function() {
-            if ( $('input[name=PassPhraseOptions]:checked', '.register-form').val() === 'PassPhraseOptionsIguana' ) {
-                console.log('PassPhraseOptionsIguana');
+            if ( $('input[name=PassPhraseOptions]:checked', '.register-form').val() === 'PassPhraseOptionsKeymaker' ) {
+                console.log('PassPhraseOptionsKeymaker');
                 $('#walletseed').text(PassPhraseGenerator.generatePassPhrase(256))
             }
             if ( $('input[name=PassPhraseOptions]:checked', '.register-form').val() === 'PassPhraseOptionsWaves' ) {
@@ -229,16 +229,16 @@ var Login = function() {
                     confirmButtonText: 'Yes, I have taken backup.'
                 }).then(function() {
                     //swal('Deleted!', 'Your file has been deleted.', 'success' );
-                    var IguanaCreateWaletData = {
+                    var KeymakerCreateWaletData = {
                         'password': $('#rpassword').val(),
                         'passphrase': $('#walletseed').val()
                     }
                     //console.log('== Data Collected ==');
-                    //console.log(IguanaCreateWaletData);
+                    //console.log(KeymakerCreateWaletData);
                     // Use AJAX to post the object to login user
                     $.ajax({
                         type: 'GET',
-                        data: IguanaCreateWaletData,
+                        data: KeymakerCreateWaletData,
                         url: 'http://127.0.0.1:7778/api/bitcoinrpc/encryptwallet',
                         dataType: 'text',
                         success: function(data, textStatus, jqXHR) {
@@ -267,7 +267,7 @@ var Login = function() {
                                         if ( value == 'BTC' ) {
                                             var logincoinmodeval = $("input[name='logincoinbtcmode']:checked").val();
                                             var logincoin_data = {"coin": value, "mode": logincoinmodeval, "reload": false};
-                                            Iguana_addcoin(logincoin_data);
+                                            Keymaker_addcoin(logincoin_data);
                                             if (index == '0' ) {
                                                 console.log(value+' '+index);
                                                 $('.register-form').submit();
@@ -277,7 +277,7 @@ var Login = function() {
                                         if ( value == 'BTCD' ) {
                                             var logincoinmodeval = $("input[name='logincoinbtcdmode']:checked").val();
                                             var logincoin_data = {"coin": value, "mode": logincoinmodeval, "reload": false};
-                                            Iguana_addcoin(logincoin_data);
+                                            Keymaker_addcoin(logincoin_data);
                                             if (index == '0' ) {
                                                 console.log(value+' '+index);
                                                 $('.register-form').submit();
@@ -290,7 +290,7 @@ var Login = function() {
                                 }
                                 console.log(data.statusText);
                                 if ( data.readyState == 0 ) {
-                                    Iguana_ServiceUnavailable();
+                                    Keymaker_ServiceUnavailable();
                                 }
                                 console.log(textStatus);
                                 console.log(jqXHR);
@@ -301,7 +301,7 @@ var Login = function() {
                             console.log('failure');
                             console.log(xhr.statusText);
                             if ( xhr.readyState == 0 ) {
-                                Iguana_ServiceUnavailable();
+                                Keymaker_ServiceUnavailable();
                             }
                             console.log(textStatus);
                             console.log(error);
@@ -390,7 +390,7 @@ var Login = function() {
                         toastr.warning("Opps... Something went wrong!", "Account Notification")
                         console.log(data.statusText);
                         if ( xhr.readyState == 0 ) {
-                            Iguana_ServiceUnavailable();
+                            Keymaker_ServiceUnavailable();
                         }
                         console.log(textStatus);
                         console.log(jqXHR);
@@ -401,7 +401,7 @@ var Login = function() {
                     console.log('failure');
                     console.log(xhr.statusText);
                     if ( xhr.readyState == 0 ) {
-                        Iguana_ServiceUnavailable();
+                        Keymaker_ServiceUnavailable();
                     }
                     console.log(textStatus);
                     console.log(error);
@@ -431,7 +431,7 @@ var Login = function() {
                         success: function(data, textStatus, jqXHR) {
                             var ActiveHandleOutput = JSON.parse(data);
                             var ActiveHandleDataToStore = JSON.stringify(data);
-                            sessionStorage.setItem('IguanaActiveAccount', ActiveHandleDataToStore);
+                            sessionStorage.setItem('KeymakerActiveAccount', ActiveHandleDataToStore);
                             console.log('== Data OutPut - Active Handle ==');
                             console.log(ActiveHandleOutput);
 
@@ -458,7 +458,7 @@ var Login = function() {
                                 toastr.warning("Opps... Something went wrong!", "Account Notification")
                                 console.log(data.statusText);
                                 if ( xhr.readyState == 0 ) {
-                                    Iguana_ServiceUnavailable();
+                                    Keymaker_ServiceUnavailable();
                                 }
                                 console.log(textStatus);
                                 console.log(jqXHR);
@@ -469,7 +469,7 @@ var Login = function() {
                             console.log('failure');
                             console.log(xhr.statusText);
                             if ( xhr.readyState == 0 ) {
-                                Iguana_ServiceUnavailable();
+                                Keymaker_ServiceUnavailable();
                             }
                             console.log(textStatus);
                             console.log(error);
@@ -487,7 +487,7 @@ var Login = function() {
                     console.log('failure');
                     console.log(xhr.statusText);
                     if ( xhr.readyState == 0 ) {
-                        Iguana_ServiceUnavailable();
+                        Keymaker_ServiceUnavailable();
                     }
                     console.log(textStatus);
                     console.log(error);
@@ -501,16 +501,16 @@ var Login = function() {
     };
 
     var handleCheckLogin = function() {
-        Iguana_activehandle();
-        //console.log('Iguana_activehandle_output: '+Iguana_activehandle_output);
-        if ( sessionStorage.getItem('IguanaActiveAccount') === null ) {
+        Keymaker_activehandle();
+        //console.log('Keymaker_activehandle_output: '+Keymaker_activehandle_output);
+        if ( sessionStorage.getItem('KeymakerActiveAccount') === null ) {
             console.log('There\'s no active wallet logged in. Please Login.');
             $('#logint-another-wallet').hide();
         } else {
-            var CheckLoginData = JSON.parse(sessionStorage.getItem('IguanaActiveAccount'));
-            if ( JSON.parse(CheckLoginData).pubkey != Iguana_activehandle_output.pubkey ) {
+            var CheckLoginData = JSON.parse(sessionStorage.getItem('KeymakerActiveAccount'));
+            if ( JSON.parse(CheckLoginData).pubkey != Keymaker_activehandle_output.pubkey ) {
                 //console.log("Login: sessionStorage data and activehandle data doesn't match");
-                //console.log('Iguana_activehandle_output: '+Iguana_activehandle_output.rmd160);
+                //console.log('Keymaker_activehandle_output: '+Keymaker_activehandle_output.rmd160);
                 //console.log('CheckLoginData: ' + JSON.parse(CheckLoginData).rmd160);
                 ClearOnLogout(false, false);
             }
@@ -547,7 +547,7 @@ var Login = function() {
                         if ( allcoinsData[value][index] == 'BTC' ) { console.log('Index: '+ index + ' and Value: BTC'); }
                         if ( allcoinsData[value][index] == 'BTCD' ) { console.log('Index: '+ index + ' and Value: BTCD'); }
                         var coinvals = {"coin":"BTCD","portp2p":14631,"mode":0}
-                        Iguana_addcoin(coinvals);
+                        Keymaker_addcoin(coinvals);
                     });
                     
                 },
@@ -562,7 +562,7 @@ var Login = function() {
         });
         
 
-        if ( sessionStorage.getItem('IguanaActiveAccount') === null ) {
+        if ( sessionStorage.getItem('KeymakerActiveAccount') === null ) {
             $.each([ 'BTC', 'BTCD' ], function( index, value ) {
                 var AddCoinBasiliskData = {
                     "poll": 100,
@@ -580,7 +580,7 @@ var Login = function() {
                 $.ajax({
                     type: 'GET',
                     data: AddCoinBasiliskData,
-                    url: 'http://127.0.0.1:7778/api/iguana/addcoin',
+                    url: 'http://127.0.0.1:7778/api/keymaker/addcoin',
                     dataType: 'text',
                     success: function(data, textStatus, jqXHR) {
                         var CoinBasiliskDataOutput = JSON.parse(data);
@@ -605,7 +605,7 @@ var Login = function() {
                         console.log(error);
                         //swal("Oops...", "Something went wrong!", "error");
                         if (xhr.readyState == '0' ) {
-                            toastr.error("Unable to connect to Iguana", "Account Notification")
+                            toastr.error("Unable to connect to Keymaker", "Account Notification")
                         }
                     }
                 });
@@ -653,7 +653,7 @@ var Login = function() {
                         toastr.warning("Opps... Something went wrong!", "Account Notification")
                         console.log(data.statusText);
                         if ( xhr.readyState == 0 ) {
-                            Iguana_ServiceUnavailable();
+                            Keymaker_ServiceUnavailable();
                         }
                         console.log(textStatus);
                         console.log(jqXHR);
@@ -663,7 +663,7 @@ var Login = function() {
                     console.log('failure');
                     console.log(xhr.statusText);
                     if ( xhr.readyState == 0 ) {
-                        Iguana_ServiceUnavailable();
+                        Keymaker_ServiceUnavailable();
                     }
                     console.log(textStatus);
                     console.log(error);

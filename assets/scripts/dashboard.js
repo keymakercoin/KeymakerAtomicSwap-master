@@ -192,7 +192,7 @@ var Dashboard = function() {
                                 console.log('failed getting Coin History.');
                                 console.log(xhr.statusText);
                                 if ( xhr.readyState == 0 ) {
-                                    Iguana_ServiceUnavailable();
+                                    Keymaker_ServiceUnavailable();
                                 }
                                 console.log(textStatus);
                                 console.log(error);
@@ -202,7 +202,7 @@ var Dashboard = function() {
                         //Get coin history and pupulate balance and other info to wallet widget
                         var historyvalues = {"timeout":20000,"agent":"basilisk","method":"history","vals":{"coin":"" + AllcoinsDataOutput[value][index] + ""}};
                         var ExecuteShowCoinHistory = setInterval(function() {
-                            if ( sessionStorage.getItem('IguanaActiveAccount') === null ) {
+                            if ( sessionStorage.getItem('KeymakerActiveAccount') === null ) {
                                 clearInterval(ExecuteShowCoinHistory);
                                 console.log('=> No wallet logged in. No need to Run History.');
                             } else {
@@ -219,13 +219,13 @@ var Dashboard = function() {
                     console.log('failed starting BitcoinDark.');
                     console.log(xhr.statusText);
                     if ( xhr.readyState == 0 ) {
-                        Iguana_ServiceUnavailable();
+                        Keymaker_ServiceUnavailable();
                     }
                     console.log(textStatus);
                     console.log(error);
                     //swal("Oops...", "Something went wrong!", "error");
                     if (xhr.readyState == '0' ) {
-                        toastr.error("Unable to connect to Iguana", "Account Notification")
+                        toastr.error("Unable to connect to Keymaker", "Account Notification")
                     }
                 }
             });
@@ -247,7 +247,7 @@ var Dashboard = function() {
         //main function to initiate the module
         init: function() {
 
-            if ( sessionStorage.getItem('IguanaActiveAccount') === null ) {
+            if ( sessionStorage.getItem('KeymakerActiveAccount') === null ) {
                 console.log('=> No wallet logged in. No need to run Dashboard JS.');
             } else {
                 handleWalletWidgets();
@@ -261,7 +261,7 @@ var Dashboard = function() {
             }, 15000);*/
 
             RunTotalFiatValue = setInterval(function() {
-                if ( sessionStorage.getItem('IguanaActiveAccount') === null ) {
+                if ( sessionStorage.getItem('KeymakerActiveAccount') === null ) {
                 console.log('=> No wallet logged in. No need to get Rates.');
                 StopTotalFiatValue();
                 } else {
@@ -282,15 +282,15 @@ jQuery(document).ready(function() {
 
 
 function ShowCoinHistory(getData) {
-    Iguana_activehandle();
-    if ( sessionStorage.getItem('IguanaActiveAccount') === null ) {
+    Keymaker_activehandle();
+    if ( sessionStorage.getItem('KeymakerActiveAccount') === null ) {
         console.log('There\'s no active wallet logged in. Please Login.');
         $('#logint-another-wallet').hide();
     } else {
-        var CheckLoginData = JSON.parse(sessionStorage.getItem('IguanaActiveAccount'));
-        if ( JSON.parse(CheckLoginData).pubkey != Iguana_activehandle_output.pubkey ) {
+        var CheckLoginData = JSON.parse(sessionStorage.getItem('KeymakerActiveAccount'));
+        if ( JSON.parse(CheckLoginData).pubkey != Keymaker_activehandle_output.pubkey ) {
             console.log("ShowCoinHistory: sessionStorage data and activehandle data doesn't match");
-            console.log(Iguana_activehandle_output.pubkey);
+            console.log(Keymaker_activehandle_output.pubkey);
             console.log(JSON.parse(CheckLoginData).pubkey);
             ClearOnLogout(true, true);
         }
@@ -410,7 +410,7 @@ function ShowCoinHistory(getData) {
                     console.log('failed getting Coin History.');
                     console.log(xhr.statusText);
                     if ( xhr.readyState == 0 ) {
-                        Iguana_ServiceUnavailable();
+                        Keymaker_ServiceUnavailable();
                         ClearOnLogout(true, true);
                     }
                     console.log(textStatus);
@@ -460,7 +460,7 @@ function SwitchBasicliskFull(switch_data) {
   $.ajax({
       type: 'GET',
       data: SwitchCoinModeData,
-      url: 'http://127.0.0.1:7778/api/iguana/addcoin',
+      url: 'http://127.0.0.1:7778/api/keymaker/addcoin',
       dataType: 'text',
       success: function(data, textStatus, jqXHR) {
           var SwitchCoinDataOutput = JSON.parse(data);
@@ -482,13 +482,13 @@ function SwitchBasicliskFull(switch_data) {
           console.log('failed starting BitcoinDark.');
           console.log(xhr.statusText);
           if ( xhr.readyState == 0 ) {
-              Iguana_ServiceUnavailable();
+              Keymaker_ServiceUnavailable();
           }
           console.log(textStatus);
           console.log(error);
           //swal("Oops...", "Something went wrong!", "error");
           if (xhr.readyState == '0' ) {
-              toastr.error("Unable to connect to Iguana", "Account Notification")
+              toastr.error("Unable to connect to Keymaker", "Account Notification")
           }
       }
   });
@@ -515,10 +515,10 @@ function TotalFiatValue() {
 
   //console.log(BTC_balance); console.log(BTCD_balance);
 
-  var TotalFiatValueData = {"agent":"iguana","method":"rates","quotes":["BTCD/BTC", BTC_Fiat_pair_value, Conversion_Fiat_Pair]};
+  var TotalFiatValueData = {"agent":"keymaker","method":"rates","quotes":["BTCD/BTC", BTC_Fiat_pair_value, Conversion_Fiat_Pair]};
   //console.log(TotalFiatValueData);
 
-  if ( sessionStorage.getItem('IguanaActiveAccount') === null ) {
+  if ( sessionStorage.getItem('KeymakerActiveAccount') === null ) {
     console.log('=> No wallet logged in. No need to get Rates.');
   } else {
     //Get Rates
@@ -560,7 +560,7 @@ function TotalFiatValue() {
           console.log('failed getting Coin History.');
           console.log(xhr.statusText);
           if ( xhr.readyState == 0 ) {
-              Iguana_ServiceUnavailable();
+              Keymaker_ServiceUnavailable();
           }
           console.log(textStatus);
           console.log(error);
@@ -629,7 +629,7 @@ function ShowCoinProgressBar(coin) {
           console.log('failed getting Coin History.');
           console.log(xhr.statusText);
           if ( xhr.readyState == 0 ) {
-              Iguana_ServiceUnavailable();
+              Keymaker_ServiceUnavailable();
           }
           console.log(textStatus);
           console.log(error);

@@ -1,2 +1,2 @@
-# IguanaAtomicSwap
-Iguana Atomic Swap Wallet
+# KeymakerAtomicSwap
+Keymaker Atomic Swap Wallet

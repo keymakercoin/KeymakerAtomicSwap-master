@@ -52,10 +52,10 @@ function sendCurrency(val) {
 
 function ReceiveCurrency(rec_val) {
 	console.log(rec_val);
-	if ( sessionStorage.getItem('IguanaActiveAccount') === null ) {
+	if ( sessionStorage.getItem('KeymakerActiveAccount') === null ) {
 		console.log('=> No wallet logged in. No need to get Rates.');
 	} else {
-		var tmp_activhndl = JSON.parse(sessionStorage.getItem('IguanaActiveAccount'));
+		var tmp_activhndl = JSON.parse(sessionStorage.getItem('KeymakerActiveAccount'));
 		$('#mdl_receive_coin_name').text(rec_val.currency)
 		$('#mdl_receive_coin_addr').text('');
 		$('#mdl_receive_coin_addr').val(JSON.parse(tmp_activhndl)[rec_val.currency]);
@@ -293,7 +293,7 @@ function WalletFiatCurrency(fiat_currency_value) {
 
 
 
-function Iguana_rmd160conv(rmd160conv_data) {
+function Keymaker_rmd160conv(rmd160conv_data) {
 	//console.log(rmd160conv_data);
 	//return rmd160conv_data;
 
